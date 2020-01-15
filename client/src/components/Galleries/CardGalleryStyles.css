@@ -1,0 +1,39 @@
+.wrapper-horizontal {
+    display: flex;
+    min-width: 100%;
+    min-height: 200px;
+    overflow-x: auto;
+    padding-top:7px;
+}
+.wrapper-horizontal::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-content {
+    margin: 5px;
+    min-width: 300px;
+    min-height: 350px;
+  }
+
+  .edit-button{
+      margin:10px
+  }
+  .remove {
+    font-size: 15px;
+    position:absolute;
+    top:5px;
+    right:5px;
+  }
+  .remove:hover{
+    color:red;
+    position:absolute;
+    top:5px;
+    right:5px;
+  }
+
+  .alert{
+    min-width: 300px
+
+  }
+
+  
