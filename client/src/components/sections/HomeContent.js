@@ -193,7 +193,7 @@ class HomeContent extends Component {
                     visible={this.state.newNoteVisible}
                     onClose={this.closeNewNote}
                     placement="bottom"
-                    height="800"
+                    height='800'
                 >
                     <NewNote Name={this.state.noteName} Body={this.state.noteBody} handleInput={this.handleNewNoteText}/>
                 </Drawer>
