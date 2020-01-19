@@ -19,6 +19,8 @@ exports.getAllEntries = (req, res) => {
 exports.createEntry = (req, res) => {
     //create entry
     //add entry to notebook
+    let notebookId = req.body.notebookId
+
     const new_entry = {
        name: {
            label: req.body.label,
@@ -30,11 +32,34 @@ exports.createEntry = (req, res) => {
        public: req.body.public,
        notes: req.body.notes
     }
-        Entry.create(new_entry, (err, newlyCreated) => {
+      
+    Notebook.findById(notebookId, (err, notebook) => {
+       if (err){
+           res.status(500).send({status: 500, message: "Error!"})
+       } else {
+           Entry.create(new_entry, (err, entry) => {
+               if (err){
+                   res.status(500).send({status: 500, message: "error", error: err})
+               } else {
+                   entry.save()
+                   notebook.entries.push(entry)
+                   notebook.save()
+                   res.status(201).send({status: 201, message: "success bro", data: entry})
+               }
+           })
+       }
+    })
+}
+
+
+     /*  Entry.create(new_entry, (err, newlyCreated) => {
             if (err) {
                 res.status(500).send({status: 500, message: '', data: newlyCreated})
             } else {
+                console.log(newlyCreated._id)
+                Notebook.find({_id: req.params.id}, (req, res) => {
+
+                })
                 res.status(200).send({status: 200, message: 'Post succeeded', data: newlyCreated})
             }
-        })
-    }
+        }) */

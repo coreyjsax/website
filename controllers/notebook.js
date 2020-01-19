@@ -1,23 +1,12 @@
 const Notebook = require('../models/notebook')
 
 exports.getAllNotebooks = (req, res) => {
-    Notebook.find({}, (err, docs) => {
-
-        if (err) {
-            if (!docs){
-
-                res.status(404).send({status: 404, message: 'No locations found'});
-            } else {
-                res.status(500).send({message: 'There was a problem...'});
-            }
-        } else {
-            if (docs.length === 0) {
-                res.status(404).send({status: 404, message: 'No locations found'});
-            } else {
-                res.json(docs);
-            }
-        }
-    })
+    Notebook.find().
+        populate('entries')
+        .exec((err, results) => {
+            if (err) res.status(500).send({status:500, message: "error bro", error: err})
+            res.json(results)
+        })
 }
 
 exports.postNotebook = (req, res) => {
