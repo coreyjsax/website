@@ -78,9 +78,11 @@ class HomeContent extends Component {
             public: this.state.public
         }
         console.log(newNotebook)
-        patch('notebook', newNotebook, this.state.notebookId)
+        patch('notebook', newNotebook, this.state.notebookId).then(() => {
+            this.props.updateData()
+        })
         this.setState({visible: false})
-        alert('submitted')
+        
 
     }
     handleInput(e, state){
@@ -92,7 +94,7 @@ class HomeContent extends Component {
         this.setState({noteBody: data})
     }
     handleNewNote(e){
-        this.setState({newNoteVisible: true})
+        this.setState({newNoteVisible: true, notebookId: e.target.value})
     }
     closeNewNote(e){
         this.setState({newNoteVisible: false})
@@ -123,7 +125,7 @@ class HomeContent extends Component {
                                     subTitle={notebook.description}
                                 >
                                     <button onClick={(e) => this.handleEditButton(e)} value={notebook._id}>edit notebook</button>
-                                    <button onClick={(e) => this.handleNewNote(e)}>Create note</button>
+                                    <button onClick={(e) => this.handleNewNote(e)} value={notebook._id}>Create note</button>
                                 </PageHeader>
                                 <NotebookGallery Data={notebook.entries}/>    
                                   
@@ -195,7 +197,13 @@ class HomeContent extends Component {
                     placement="bottom"
                     height='800'
                 >
-                    <NewNote Name={this.state.noteName} Body={this.state.noteBody} handleInput={this.handleNewNoteText}/>
+                    <NewNote
+                        NotebookId={this.state.notebookId} 
+                        Name={this.state.noteTitle} 
+                        Body={this.state.noteBody} 
+                        handleInput={this.handleNewNoteText} 
+                        handleForm={this.handleInput} 
+                    />
                 </Drawer>
             </div>
         )

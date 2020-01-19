@@ -27,6 +27,7 @@ class Home extends React.Component {
       }
       this.getData = this.getData.bind(this)
       this.handleDrawer = this.handleDrawer.bind(this)
+      this.updateData = this.updateData.bind(this)
   }
   getData(){
     
@@ -36,6 +37,9 @@ class Home extends React.Component {
   
   }
   componentDidMount(){
+    this.getData()
+  }
+  updateData(){
     this.getData()
   }
   handleDrawer(e, data){
@@ -58,13 +62,13 @@ class Home extends React.Component {
       <Fragment>
         <Hero />
         <hr />
-        <HomeContent Notebooks={this.state.notebooks} handleDrawer={this.handleDrawer} User={this.props.User}/>
+        <HomeContent 
+            Notebooks={this.state.notebooks} 
+            handleDrawer={this.handleDrawer} 
+            User={this.props.User} 
+            updateData={this.updateData} 
+        />
         <Content />
-        
-     
-         
-       
-        
       </Fragment>
       
     )
