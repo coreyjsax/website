@@ -22,7 +22,7 @@ exports.createEntry = (req, res) => {
     let notebookId = req.body.notebookId
 
     const new_entry = {
-       name: {
+       title: {
            label: req.body.label,
            value: req.body.value
        } ,
@@ -32,7 +32,7 @@ exports.createEntry = (req, res) => {
        public: req.body.public,
        notes: req.body.notes
     }
-      
+      console.log(req.body)
     Notebook.findById(notebookId, (err, notebook) => {
        if (err){
            //console.log(err)

@@ -12,6 +12,8 @@
   margin: 3px;
 }
 
+
+
 .wrapper-horizontal::-webkit-scrollbar {
     display: none;
   }

@@ -92,15 +92,14 @@ class HomeContent extends Component {
     }
     createNewNote(e){
         let newNote = {
-            title: {
-                label: this.state.noteTitle,
-                value: this.state.noteTitle.toLowerCase().replace(/\s/g, '_'),
-            },
+            label: this.state.noteTitle,
+            value: this.state.noteTitle.toLowerCase().replace(/\s/g, '_'),
             summary: this.state.noteSummary,
             body: this.state.noteBody,
             public: this.state.notePublic,
             notebookId: this.state.notebookId
         }
+        console.log(newNote)
        post('entry', newNote).then(() => {
            this.props.updateData()
        })
@@ -141,14 +140,43 @@ class HomeContent extends Component {
                     notebooks.length > 0 ?
                         notebooks.map(notebook => (
                             <div>
-                                <PageHeader
-                                    title={notebook.name.label}
-                                    subTitle={notebook.description}
-                                >
-                                    <button onClick={(e) => this.handleEditButton(e)} value={notebook._id}>edit notebook</button>
-                                    <button onClick={(e) => this.handleNewNote(e)} value={notebook._id}>Create note</button>
-                                </PageHeader>
-                                <NotebookGallery Data={notebook.entries}/>    
+                                
+                                {!this.props.User ?
+                                    notebook.public == true ?
+                                        <div>
+                                            <PageHeader
+                                            title={notebook.name.label}
+                                            subTitle={notebook.description}
+                                        >
+                                            { this.props.User ? 
+                                                this.props.User.email == 'corey@pizzaluce.com' ? 
+                                                    
+                                                        <>
+                                                        <button onClick={(e) => this.handleEditButton(e)} value={notebook._id}>edit notebook</button>
+                                                        <button onClick={(e) => this.handleNewNote(e)} value={notebook._id}>Create note</button>
+                                                        </>
+                                                
+                                                : ""
+                                            : ""
+                                            }
+                                        </PageHeader>
+                                        <NotebookGallery Data={notebook.entries} User={this.props.User}/> 
+                                        </div>
+                                        : ""
+                                    : this.props.User.email == 'corey@pizzaluce.com' ?
+                                        <div>
+                                            <PageHeader
+                                                title={notebook.name.label}
+                                                subTitle={notebook.description}
+                                            >
+                                                <button onClick={(e) => this.handleEditButton(e)} value={notebook._id}>edit notebook</button>
+                                                <button onClick={(e) => this.handleNewNote(e)} value={notebook._id}>Create note</button>
+                                            </PageHeader>
+                                            <NotebookGallery Data={notebook.entries} User={this.props.User}/> 
+                                        </div>  
+                                        : ""
+                                }
+                                       
                                   
                             </div>
                         ))

@@ -39,7 +39,7 @@ const App = () => {
             <Route path="/" exact render={(routeProps) => (<Home {...routeProps} User={user} />)} />
             <PrivateRoute path="/admin" component={Admin} user={user}/>
             <PrivateRoute path="/profile" component={Profile} user={user} />
-            <PrivateRoute path="/location" component={Location} user={user}/>
+            <Route path="/location" component={Location} user={user}/>
           </Switch>
           
         </Container>
