@@ -40,6 +40,7 @@ const App = () => {
             <PrivateRoute path="/admin" component={Admin} user={user}/>
             <PrivateRoute path="/profile" component={Profile} user={user} />
             <Route path="/location" component={Location} user={user}/>
+            <Route path='/entry/:id' compoent={Location} />
           </Switch>
           
         </Container>

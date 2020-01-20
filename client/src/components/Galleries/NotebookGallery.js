@@ -1,5 +1,5 @@
 import React from "react"
-import { NavLink as RouterNavLink } from "react-router-dom";
+import { NavLink as RouterNavLink, Link } from "react-router-dom";
 //import {Card, CardBody, CardTitle, CardSubtitle, CardText } from "reactstrap"
 import { Card, Icon, Avatar, Button} from 'antd'
 import styles from '../Galleries/CardGalleryStyles.css'
@@ -12,9 +12,8 @@ const NotebookGallery = (props) => {
             {
                 props.Data ?
                     props.Data.length >= 1 ? props.Data.map(card =>(
-
+                        <Link to={`/entry/${card._id}`}>
                         <Card
-                            
                             className="card"
                             style={{"margin": "3px"}}
                             cover={
@@ -46,7 +45,7 @@ const NotebookGallery = (props) => {
                             description={card.summary}
                         />
                         </Card>
-                    
+                        </Link>
                     ))
                     : <span>This notebook is empty</span>
                 :   <span></span>
