@@ -35,10 +35,12 @@ exports.createEntry = (req, res) => {
       
     Notebook.findById(notebookId, (err, notebook) => {
        if (err){
+           //console.log(err)
            res.status(500).send({status: 500, message: "Error!"})
        } else {
            Entry.create(new_entry, (err, entry) => {
                if (err){
+                   console.log(err)
                    res.status(500).send({status: 500, message: "error", error: err})
                } else {
                    entry.save()

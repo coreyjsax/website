@@ -35,8 +35,14 @@ export function post(model, body, token){
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-    }).then(res => res.json())
-    .catch(err => err)
+    }).then(res => {
+        console.log(res)
+        return res.json()
+    })
+    .catch(err => {
+        console.log(err)
+        return err
+    })
 }
 
 export function remove(model, id){

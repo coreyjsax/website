@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ReactDOM from 'react-dom'
 import { Row, Col } from "reactstrap";
-import { PageHeader, Drawer, Switch } from 'antd'
+import { PageHeader, Drawer, Switch, Icon} from 'antd'
 import {Form, FormGroup, FormText, Input, Label, Button } from 'reactstrap'
 import Select, {components} from 'react-select'
 import CKEditor from '@ckeditor/ckeditor5-react';
@@ -13,6 +13,7 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 const NewNote = (props) => {
     const [show, setShow] = useState('editor')
     const [title, setTitle] = useState()
+
 console.log(props)
     const handleClick = (e, action) => {
         setShow(action)
@@ -31,13 +32,26 @@ console.log(props)
             <>
                 <FormGroup>
                     <Label>Title</Label>
-                    <Input type="text" defaultValue={props.Name || "Title"}  onChange={(e) => props.handleForm(e, 'noteTitle') }/>
+                    <Input type="text" defaultValue={props.Name || ""}  onChange={(e) => props.handleForm(e, 'noteTitle') }/>
+                </FormGroup>
+                <FormGroup>
+                    <Label>Summary</Label>
+                    <Input type="textarea" defaultValue={props.Summary || ''} onChange={(e) => props.handleForm(e, 'noteSummary')} />
+                </FormGroup>
+                <FormGroup>
+                    <Label>Public ?</Label>
+                    <Switch 
+                        checkedChildren={<Icon type="check"/>}
+                        unCheckedChildren={<Icon type="close"/>}
+                        defaultChecked
+                        onChange={(e) => props.Public(e)}
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label>Create your note...</Label>
                     <CKEditor
                         editor={ ClassicEditor }
-                        data={props.Body || 'test'}
+                        data={props.Body || ''}
                         onInit={ editor => {
                             // You can store the "editor" and use when it is needed.
                             console.log( 'Editor is ready to use!', editor );
@@ -56,7 +70,11 @@ console.log(props)
                     
                     />
                 </FormGroup>
-            
+                <Button
+                    onClick={(e) => props.createNewNote()}
+                >
+                    Submit
+                </Button>        
             </>
         }
 

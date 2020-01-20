@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NotebookGallery from '../Galleries/NotebookGallery'
 import CardGalleryHorizontal from '../Galleries/CardGalleryHorizontal'
 import NewNote from '../forms/NewNote'
-import { patch } from '../../tools/Restful'
+import { patch, post } from '../../tools/Restful'
 
 
 class HomeContent extends Component {
@@ -22,7 +22,9 @@ class HomeContent extends Component {
             selectedNotebook: '',
             name: '',
             public: false,
-            noteName: '',
+            noteTitle: '',
+            noteSummary: '',
+            notePublic: '',
             noteBody: ''
         }
         this.openDrawer = this.openDrawer.bind(this)
@@ -32,6 +34,8 @@ class HomeContent extends Component {
         this.handleNewNote = this.handleNewNote.bind(this)
         this.closeNewNote = this.closeNewNote.bind(this)
         this.handleNewNoteText = this.handleNewNoteText.bind(this)
+        this.createNewNote = this.createNewNote.bind(this)
+        this.handleNewNotePublic = this.handleNewNotePublic.bind(this)
     }
     openDrawer(e){
       
@@ -69,6 +73,9 @@ class HomeContent extends Component {
     handleNoteInput(e){
 
     }
+    handleNewNotePublic(e){
+        this.setState({notePublic: e})
+    }
     handleSubmit(e){
         let newNotebook = {
             name: {value: this.state.name.toLowerCase().replace(/\s/g, '_'),
@@ -82,8 +89,22 @@ class HomeContent extends Component {
             this.props.updateData()
         })
         this.setState({visible: false})
-        
-
+    }
+    createNewNote(e){
+        let newNote = {
+            title: {
+                label: this.state.noteTitle,
+                value: this.state.noteTitle.toLowerCase().replace(/\s/g, '_'),
+            },
+            summary: this.state.noteSummary,
+            body: this.state.noteBody,
+            public: this.state.notePublic,
+            notebookId: this.state.notebookId
+        }
+       post('entry', newNote).then(() => {
+           this.props.updateData()
+       })
+       this.closeNewNote()
     }
     handleInput(e, state){
         console.log(e)
@@ -136,13 +157,7 @@ class HomeContent extends Component {
                     <span></span>
                 }
                 
-                {
-                    user2 != undefined ?
-                    
-                        <button onClick={(e, data) => this.props.handleDrawer(e, {action: "create", model: "notebook"})}>Create a new Notebook</button>
-                    :
-                        <span>not logged in.</span>
-                }
+                
                 <Drawer
                     visible={this.state.visible}
                     onClose={this.closeDrawer}
@@ -199,10 +214,13 @@ class HomeContent extends Component {
                 >
                     <NewNote
                         NotebookId={this.state.notebookId} 
-                        Name={this.state.noteTitle} 
+                        Name={this.state.noteTitle}
+                        Summary={this.state.noteSummary} 
+                        Public={this.handleNewNotePublic}
                         Body={this.state.noteBody} 
                         handleInput={this.handleNewNoteText} 
-                        handleForm={this.handleInput} 
+                        handleForm={this.handleInput}
+                        createNewNote={this.createNewNote} 
                     />
                 </Drawer>
             </div>
