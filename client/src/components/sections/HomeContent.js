@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import {BrowserRouter as Router, Route} from "react-router-dom"
 import { Row, Col } from "reactstrap";
 import { PageHeader, Drawer, Switch } from 'antd'
 import {Form, FormGroup, FormText, Input, Button } from 'reactstrap'
@@ -161,6 +161,7 @@ class HomeContent extends Component {
                                             }
                                         </PageHeader>
                                         <NotebookGallery Data={notebook.entries} User={this.props.User}/> 
+                                           
                                         </div>
                                         : ""
                                     : this.props.User.email == 'corey@pizzaluce.com' ?

@@ -31,7 +31,7 @@ class Home extends React.Component {
   }
   getData(){
     
-    return Promise.all([FetchData('notebook')])
+    Promise.all([FetchData('notebook')])
     .then(([notebooks]) => this.setState({notebooks: notebooks}))
     .catch(err => err)
   
